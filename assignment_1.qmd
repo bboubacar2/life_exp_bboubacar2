@@ -45,10 +45,28 @@ college_data <- read_csv("../data/collegedata.csv")
 ```
 
 - Task 2:Determine rows and columns
+```{r}
+glimpse(college_data1)
+```
 
+ rows: 7175 and columns 12.
+ 
 - Task 3: Use tidyverse to select INSTNM, SAT_AVG, and ADM_RATE
+```{r}
+college_data1 %>% select(
+  "INSTNM",
+  "SAT_AVG",
+  "ADM_RATE",
+)
+```
+
 
 - Task 4: Create a scatterplot for SAT_AVG and ADM_RATE (Remove NA)
+
+```{r}
+
+```
+
 
 ## Submission
 
