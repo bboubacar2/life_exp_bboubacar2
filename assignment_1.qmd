@@ -64,7 +64,21 @@ college_data1 %>% select(
 - Task 4: Create a scatterplot for SAT_AVG and ADM_RATE (Remove NA)
 
 ```{r}
+college_data1 <- college_data1 %>% 
+  filter(SAT_AVG != "NA", ADM_RATE != "NA")
 
+college_data1 <- college_data1 %>% select(
+  SAT_AVG, ADM_RATE
+)
+
+ggplot(college_data1, aes(x = ADM_RATE, y = SAT_AVG)) +
+  geom_point(color = "steelblue", size = 3) +
+  labs(
+    title = "ADM_RATE vs SAT_AVG",
+    x = "Admission Rate",
+    y = "SAT Average"
+  ) +
+  theme_minimal()
 ```
 
 
