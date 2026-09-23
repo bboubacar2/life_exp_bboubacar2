@@ -34,6 +34,9 @@ library(tidyverse)
 # Question:
 
 - Task 1: Read data using a relative path
+```{r}
+college_data1 <- read_csv("/home/boubacar/Documents/Data-413/Homework/collegedata.csv")
+```
 
 
 ``` r
