@@ -1,7 +1,7 @@
 ---
 title: "Homework Tidyverse"
-subtitle: "Hamid Semiyari"
-format:
+subtitle: "Boubacar Bah"
+format: HTML
   html:
     embed-resources: true
 editor: visual
@@ -44,24 +44,34 @@ tribble( ~x,    ~y,    ~w,    ~z,
 ## 1_a:
 
 - Use and show a `map` function to find the "mean" of each column of the `dt` data table
-
+```{r}
+map(dt, mean)
+```
 
 
 ## 1_b:
 
 - Use and show a `map` function to find the "standard deviation" of each column of the `dt` data table.
-
+```{r}
+map(dt, sd)
+```
 
 
 ## 1_c:
 
 - Use and show a map function that will calculate the "square root" of each value of each column of the data table `dt`.
-
+```{r}
+map(dt, ~ sqrt(.x))
+```
 
 
 ## 1_d:
 
 - Use R code to find the "mean", "max", "1st Quartile", "3rd Quartile", "Median", and "Min" for each column of the `dt` data table. (Hint: You do not have to use a map function)
+
+```{r}
+summary(dt)
+```
 
 
 # Problem 2:
@@ -72,39 +82,72 @@ Write a function that uses a for loop that, for each iteration, randomly draws 5
 
 - We want to create a vector of size 10 and we want its values to be numeric.
 
-
-
 - Then we want to randomly draw 5 observations from an exponential distribution with "rate" parameter 1 (use `rexp(5, rate = 1)`) and calculates its "mean"
-
 
 - Now we want to create a vector that has length of 10 and its values are mean of this randomly selected exponential functions
 
-
-
 - Now we want to draw the histogram. But we need to have a data frame. Let us define a data frame.
-
 
 - Now we can draw a histogram
 
-
-
   - **Now, let's solve the problem all in one step**
+  
+```{r}
+set.seed(1)
+out_put <- vector("double", 10000)
+for (i in seq_along(out_put)) {
+  randSamp <- rexp(5, rate = 1)
+  out_put[i] <- mean(randSamp)
+}
 
+df_out <- tibble(means = out_put)
+ggplot(df_out, aes(means)) +
+  geom_histogram(bins= 40, fill = "lightblue", color = "white")
+```
+  
 
 ## 2_a:
 
 - Repeat part 1 by using a `map_*()` function.
+```{r}
+set.seed(1)
 
+map_out <- map_dbl(1:10000, ~ mean(rexp(5,rate = 1)))
+
+tibble(means = map_out) |>
+  ggplot(aes(means)) + geom_histogram(bins= 40, fill = "lightblue", color = "white")
+```
 
 ## 2_b:
 
 - Repeat part 1 by using the `replicate()` function.
+
+```{r}
+set.seed(1)
+out_resp <- replicate(10000, mean(rexp(5, rate = 1)))
+
+tibble(means = out_resp) |>
+  ggplot(aes(means)) +
+  geom_histogram(bins= 40, fill = "lightgreen", color = "white")
+```
 
 
 ## 2_c:
 
 - Use a another for loop that will print out plots for sample sizes of 5, 10, and 20 observations (instead of just 5).
 
+```{r}
+sizes <- c(5,10,20)
+
+for (n in sizes) {
+  out <- replicate(10000, mean(rexp(n, rate = )))
+  df <- tibble(means = out)
+  print(
+    ggplot(df,aes(means)) +
+      geom_histogram(bins= 40, fill = "red", color = "white") 
+  )
+}
+```
 
 
 # Problem 3:
@@ -146,13 +189,28 @@ for (i in seq_along(df)) {            # 2. sequence
 output
 ```
 
-
 - **Solution:** coding to calculate the "standard deviation" for each variable
+
+```{r}
+my_data <- mtcars
+respo <- vector("double", ncol(my_data))
+
+for (i in seq_along(my_data)){
+  respo[[i]] <- sd(my_data[[i]])
+}
+
+names(respo) <- names(my_data)
+respo
+```
+
 
 # Problem 4:
 
 Generate a sequence of dates from **January 1, 2015** to **December 31, 2025**, spaced by every **two months**. Extract the **year**, **quarter**, and **ISO week number** for each date.
 
+```{r}
+
+```
 
 # Problem 5
 
@@ -161,8 +219,6 @@ Given the following dates, compute the difference in **months** and **weeks** be
 ``` r
 sample_dates <- c("2018-03-15", "2020-07-20", "2023-01-10", "2025-09-05")
 ```
-
-
 
 # Problem 6
 

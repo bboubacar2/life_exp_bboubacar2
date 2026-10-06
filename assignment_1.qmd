@@ -1,5 +1,6 @@
 ---
 title: "Assignment 2"
+author: "Boubacar Bah" 
 format:
   html:
     embed-resources: true
