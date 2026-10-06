@@ -209,21 +209,46 @@ respo
 Generate a sequence of dates from **January 1, 2015** to **December 31, 2025**, spaced by every **two months**. Extract the **year**, **quarter**, and **ISO week number** for each date.
 
 ```{r}
+dates <- seq(ymd("2015-01-01"), ymd("2025-12-31"), by= "2 months")
 
+tibble(
+  date= dates,
+  year = year(dates),
+  quarter= quarter(dates),
+  isoweek = isoweek(dates)
+)
 ```
 
 # Problem 5
 
 Given the following dates, compute the difference in **months** and **weeks** between each consecutive pair.
 
-``` r
-sample_dates <- c("2018-03-15", "2020-07-20", "2023-01-10", "2025-09-05")
+``` {r}
+sample_dates <- c("2018-03-15", "2020-07-20", "2023-01-10", "2025-09-05") |> ymd()
+
+difference_month <- diff(sample_dates)/ dmonths(1)
+diff_week <- diff(sample_dates)/ dweeks(1)
+
+tibble(
+  from = sample_dates[-length(sample_dates)],
+  to = sample_dates[-1],
+  months = difference_month,
+  weeks = diff_week
+)
 ```
 
 # Problem 6
 
 Given a list of mixed date formats, use `map()` and `possibly()` from `purrr` to safely convert them to **Date** format and extract the **month name**.
 
-``` r
+``` {r}
 date_strings <- list("2023-06-10", "2022/12/25", "15-Aug-2021", "InvalidDate")
+safe_parse <- possibly(~ parse_date_time(.x, orders = c("ymd", "Y/m/d", "d-b-y")), NA)
+parsed <- map(date_strings, safe_parse)
+
+tibble(
+  orginal= date_strings,
+  parsed = parsed,
+  month_name= map_dbl(parsed, ~ ifelse(is.na(.x), NA, month(.x, label = TRUE)))
+)
 ```
