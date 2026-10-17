@@ -71,9 +71,6 @@ conn <- dbConnect(
 )
 ```
 
-``` r
-dbGetQuery(conn, "YOUR SQL HERE")
-```
 
 ```{r}
 dbGetQuery(conn, 
@@ -89,7 +86,27 @@ Find the **number of flights**
 
 i.  in the dataset
 
+```{r}
+dbGetQuery(conn, 
+          "SELECT COUNT(*) AS n_flights
+          FROM flights
+          "
+           )
+```
+
+
 ii. for each carrier
+
+```{r}
+dbGetQuery(conn,
+           "SELECT carrier, 
+           COUNT(*) AS n_flights
+           FROM flights
+           GROUP BY carrier
+           ORDER BY n_flights DESC
+                "
+           )
+```
 
 #### c.
 
