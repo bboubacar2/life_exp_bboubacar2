@@ -217,6 +217,14 @@ Find the **average departure delayby month**
 - Your output should include:
   - month
   - average departure delay
+  
+```{r}
+dbGetQuery(conn,
+           "SELECT AVG(dep_delay) AS avg_dep_delay
+           FROM flights
+           ")
+```
+  
 
 #### d.
 
@@ -224,7 +232,23 @@ Find the **top 10 routes** (`dest`) by:
 
 - `origin`
 
+```{r}
+dbGetQuery(conn,
+           "SELECT origin, COUNT(*) AS n_flgihts
+           FROM flights
+           GROUP BY origin
+           ORDER BY n_flgihts DESC")
+```
+
 - `dest`
+```{r}
+dbGetQuery(conn,
+           "SELECT dest, COUNT(*) AS n_flgihts
+           FROM flights
+           GROUP BY dest
+           ORDER BY n_flgihts DESC")
+```
+
 
 ordered by **number of flights**.
 
