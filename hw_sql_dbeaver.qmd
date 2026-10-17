@@ -48,13 +48,13 @@ Complete the following exercises using the appropriate packages in R. Ensure tha
 
 - Load Packages `DBI`, `duckdb`, `nycflights13` and anything else you need
 
-## Loading libraries 
+## Loading libraries
+
 ```{r}
 library(DBI)
 library(duckdb)
 
 ```
-
 
 - Download the duck database. <https://data-science-master.github.io/lectures/data/flights.duckdb>
 
@@ -70,7 +70,6 @@ conn <- dbConnect(
   dbdir = "flights.duckdb"
 )
 ```
-
 
 ```{r}
 dbGetQuery(conn, 
@@ -94,7 +93,6 @@ dbGetQuery(conn,
            )
 ```
 
-
 ii. for each carrier
 
 ```{r}
@@ -111,6 +109,7 @@ dbGetQuery(conn,
 #### c.
 
 Find the **average departure delay** (`dep_delay`)
+
 ```{r}
 dbGetQuery(conn,
            "SELECT 
@@ -120,10 +119,10 @@ dbGetQuery(conn,
 ```
 
 #### d.
+
 ```{r}
 ##dbGetQuery(conn, "PRAGMA table_info('flights') ")
 ```
-
 
 Find the **top 5 destinations** (`dest`) With the most flights.
 
@@ -139,8 +138,6 @@ dbGetQuery(conn,
            LIMIT 5
            ")
 ```
-
-
 
 - Your output should include:
   - destination
@@ -167,12 +164,11 @@ dbGetQuery(conn,
            ")
 ```
 
+You must close the connection when you are done.
 
-You must close the connection when you are done. 
 ```{r}
 dbDisconnect(conn, shutdown = TRUE)
 ```
-
 
 ### Part II: Answer the following question by running SQL using **DBeaver** with **DuckDB**.
 
@@ -181,17 +177,6 @@ dbDisconnect(conn, shutdown = TRUE)
 #### a.
 
 List the first **10 rows** of the `flights` table.
-
-``` r
-dbGetQuery(conn, "YOUR SQL HERE")
-```
-```{r}
-dbGetQuery(conn,
-           "SELECT *
-           FROM flights
-           LIMIT 10")
-```
-
 
 #### b.
 
@@ -203,13 +188,6 @@ Find the **number of flights** for each carrier.
   - carrier
   - number of flights Sort from the **largest to smallest**.
 
-```{r}
-dbGetQuery(conn,
-           "SELECT carrier, COUNT(*) AS n_flights
-           FROM flights
-           GROUP BY carrier
-           ORDER BY n_flights DESC")
-```
 #### c.
 
 Find the **average departure delayby month**
@@ -217,14 +195,6 @@ Find the **average departure delayby month**
 - Your output should include:
   - month
   - average departure delay
-  
-```{r}
-dbGetQuery(conn,
-           "SELECT AVG(dep_delay) AS avg_dep_delay
-           FROM flights
-           ")
-```
-  
 
 #### d.
 
@@ -232,23 +202,7 @@ Find the **top 10 routes** (`dest`) by:
 
 - `origin`
 
-```{r}
-dbGetQuery(conn,
-           "SELECT origin, COUNT(*) AS n_flgihts
-           FROM flights
-           GROUP BY origin
-           ORDER BY n_flgihts DESC")
-```
-
 - `dest`
-```{r}
-dbGetQuery(conn,
-           "SELECT dest, COUNT(*) AS n_flgihts
-           FROM flights
-           GROUP BY dest
-           ORDER BY n_flgihts DESC")
-```
-
 
 ordered by **number of flights**.
 
@@ -278,10 +232,6 @@ Submit the exported CSV file along with your homework.
 2.  From the drop-down menu, select **Disconnect**.
 
 3.  You should see a message on the **bottom right corner**:
-
-    ```         
-    Not connected to database
-    ```
 
 4.  To reconnect, go to **Database → Connect** and select your connection.
 
