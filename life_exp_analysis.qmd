@@ -1,0 +1,22 @@
+---
+title: "Examine Life Expectanccy"
+author: "Boubacar Bah"
+date-format: " September 9, 2026"
+format: html
+---
+
+## Loading libraries
+```{r}
+suppressMessages({
+  library(tidyverse)
+library(gapminder)
+})
+```
+
+
+## Abstract 
+
+
+
+
+## Analysis
