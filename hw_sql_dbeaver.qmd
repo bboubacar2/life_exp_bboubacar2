@@ -120,8 +120,27 @@ dbGetQuery(conn,
 ```
 
 #### d.
+```{r}
+##dbGetQuery(conn, "PRAGMA table_info('flights') ")
+```
+
 
 Find the **top 5 destinations** (`dest`) With the most flights.
+
+```{r}
+dbGetQuery(conn,
+           "
+           SELECT
+           dest,
+           COUNT(*) as n_flights
+           FROM flights
+           GROUP BY dest
+           ORDER BY n_flights DESC
+           LIMIT 5
+           ")
+```
+
+
 
 - Your output should include:
   - destination
@@ -137,7 +156,23 @@ Create a table showing:
 
 Sort the results from **largest to smallest delay**
 
-> You must close the connection when you are done. Use `dbDisconnect()`
+```{r}
+dbGetQuery(conn,
+           "SELECT 
+           carrier,
+           AVG(arr_delay) AS avg_arr_delay
+           FROM flights
+           GROUP BY carrier
+           ORDER BY avg_arr_delay DESC
+           ")
+```
+
+
+You must close the connection when you are done. 
+```{r}
+dbDisconnect(conn, shutdown = TRUE)
+```
+
 
 ### Part II: Answer the following question by running SQL using **DBeaver** with **DuckDB**.
 
@@ -150,6 +185,13 @@ List the first **10 rows** of the `flights` table.
 ``` r
 dbGetQuery(conn, "YOUR SQL HERE")
 ```
+```{r}
+dbGetQuery(conn,
+           "SELECT *
+           FROM flights
+           LIMIT 10")
+```
+
 
 #### b.
 
@@ -161,6 +203,13 @@ Find the **number of flights** for each carrier.
   - carrier
   - number of flights Sort from the **largest to smallest**.
 
+```{r}
+dbGetQuery(conn,
+           "SELECT carrier, COUNT(*) AS n_flights
+           FROM flights
+           GROUP BY carrier
+           ORDER BY n_flights DESC")
+```
 #### c.
 
 Find the **average departure delayby month**
